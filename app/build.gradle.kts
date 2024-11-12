@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.example.super_mega_fitness_tracker"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.super_mega_fitness_tracker"
-        minSdk = 24
-        targetSdk = 34
+        minSdk = 28
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
