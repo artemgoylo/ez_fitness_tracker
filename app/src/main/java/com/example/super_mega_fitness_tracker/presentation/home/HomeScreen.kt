@@ -43,6 +43,11 @@ fun HomeScreen(navigator: DestinationsNavigator?) {
                     // Or setting the minimum and maximum dates
                     // minDate = System.currentTimeMillis() - 1000
                     // maxDate = System.currentTimeMillis() + 1000 * 60 * 60 * 24
+                    setOnDateChangeListener { _, year, month, dayOfMonth ->
+                        // Handle date change here
+                        //Toast.makeText(context, "Selected date: $year-$month-$dayOfMonth", Toast.LENGTH_SHORT).show()
+                        viewModel.onDateSelect(year, month, dayOfMonth)
+                    }
                 }
             }
         )

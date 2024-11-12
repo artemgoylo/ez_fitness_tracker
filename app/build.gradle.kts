@@ -47,6 +47,8 @@ kotlin {
 }
 
 dependencies {
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
     implementation(libs.koin)
     implementation(libs.koin.compose)
     implementation(libs.androidx.core.ktx)
@@ -59,6 +61,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.compose.destinations.core)
     ksp(libs.compose.destinations.ksp)
+    ksp(libs.androidx.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
