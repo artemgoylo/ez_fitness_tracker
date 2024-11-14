@@ -1,7 +1,9 @@
 package com.example.super_mega_fitness_tracker.presentation.detalization
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -10,11 +12,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -41,13 +47,12 @@ fun DetalizationScreen(viewModel: DetalizationViewModel = koinViewModel()) {
             onWeightChange = { value, id -> viewModel.onWeightChange(value, id) },
         )
         Button(
-            modifier = Modifier.height(120.dp).width(120.dp),
-            onClick = { viewModel.onAddCard() }
+            onClick = { viewModel.onAddCard() },
         ) {
             Icon(
                 imageVector = Icons.Filled.Add,
                 contentDescription = "Add card button",
-                modifier = Modifier.size(48.dp),
+                modifier = Modifier.size(32.dp),
             )
         }
     }
