@@ -1,16 +1,25 @@
 package com.example.super_mega_fitness_tracker.presentation.detalization
 
 import androidx.core.text.isDigitsOnly
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.super_mega_fitness_tracker.common.IncrementDirection
+import com.example.super_mega_fitness_tracker.domain.use.case.SaveExerciseReportsUseCase
+import com.example.super_mega_fitness_tracker.presentation.detalization.mapper.toDomain
 import com.example.super_mega_fitness_tracker.presentation.detalization.model.ExerciseReport
+import com.example.super_mega_fitness_tracker.presentation.navArgs
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 const val COUNT_LIMIT = 100
 
-class DetalizationViewModel: ViewModel() {
+class DetalizationViewModel(savedStateHandle: SavedStateHandle, private val useCase: SaveExerciseReportsUseCase): ViewModel() {
+    private val navArgs: DetalizationScreenNavArgs = savedStateHandle.navArgs()
+    val date = navArgs.date
+
     val exercises: StateFlow<List<ExerciseReport>>
         field = MutableStateFlow(emptyList())
 
@@ -62,6 +71,12 @@ class DetalizationViewModel: ViewModel() {
                     report.copy(weight = value.toIntOrNull() ?: 0)
                 } else report
             }
+        }
+    }
+
+    fun onSave() {
+        viewModelScope.launch {
+            useCase(exercises.value.map { it.toDomain(date) })
         }
     }
 

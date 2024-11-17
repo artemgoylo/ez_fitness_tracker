@@ -1,20 +1,24 @@
 package com.example.super_mega_fitness_tracker.presentation.detalization
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.super_mega_fitness_tracker.common.IncrementDirection
@@ -22,9 +26,12 @@ import com.example.super_mega_fitness_tracker.presentation.detalization.model.Ex
 import com.ramcosta.composedestinations.annotation.Destination
 import org.koin.androidx.compose.koinViewModel
 
-@Destination
+@Destination(navArgsDelegate = DetalizationScreenNavArgs::class)
 @Composable
 fun DetalizationScreen(viewModel: DetalizationViewModel = koinViewModel()) {
+    val context = LocalContext.current
+    LaunchedEffect(Unit) { Toast.makeText(context, "${viewModel.date}", Toast.LENGTH_SHORT).show() }
+
     val exercises = viewModel.exercises.collectAsStateWithLifecycle()
 
     Column(
@@ -39,16 +46,29 @@ fun DetalizationScreen(viewModel: DetalizationViewModel = koinViewModel()) {
             onNameChange = { value, id -> viewModel.onNameChange(value, id) },
             onWeightChange = { value, id -> viewModel.onWeightChange(value, id) },
         )
-        Button(
-            modifier = Modifier.size(48.dp),
-            onClick = { viewModel.onAddCard() },
-            contentPadding = PaddingValues(6.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Add,
-                contentDescription = "Add card button",
-                modifier = Modifier.fillMaxSize(),
-            )
+        Row() {
+            Button(
+                modifier = Modifier.size(48.dp),
+                onClick = { viewModel.onAddCard() },
+                contentPadding = PaddingValues(6.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = "Add card",
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+            Button(
+                modifier = Modifier.size(48.dp),
+                onClick = { viewModel.onSave() },
+                contentPadding = PaddingValues(6.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Check,
+                    contentDescription = "Save cards",
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
         }
     }
 }
@@ -79,8 +99,8 @@ private fun CardsList(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewDetalizationScreen() {
-    DetalizationScreen(DetalizationViewModel())
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewDetalizationScreen() {
+//    DetalizationScreen(DetalizationViewModel())
+//}

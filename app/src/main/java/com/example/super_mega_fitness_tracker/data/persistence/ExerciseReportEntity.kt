@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class ExerciseReportEntity(
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     val setCount: Int,
     val repCount: Int,

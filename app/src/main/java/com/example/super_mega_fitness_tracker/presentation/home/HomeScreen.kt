@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.super_mega_fitness_tracker.presentation.destinations.DetalizationScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
@@ -27,6 +28,8 @@ import java.util.Calendar
 @Composable
 fun HomeScreen(navigator: DestinationsNavigator?) {
     val viewModel: HomeViewModel = koinViewModel()
+    val date = viewModel.date.collectAsStateWithLifecycle()
+
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxSize().padding(16.dp),
@@ -43,6 +46,7 @@ fun HomeScreen(navigator: DestinationsNavigator?) {
                     // Or setting the minimum and maximum dates
                     // minDate = System.currentTimeMillis() - 1000
                     // maxDate = System.currentTimeMillis() + 1000 * 60 * 60 * 24
+                    viewModel.onDateSelect(this.date)
                     setOnDateChangeListener { _, year, month, dayOfMonth ->
                         // Handle date change here
                         //Toast.makeText(context, "Selected date: $year-$month-$dayOfMonth", Toast.LENGTH_SHORT).show()
@@ -52,7 +56,9 @@ fun HomeScreen(navigator: DestinationsNavigator?) {
             }
         )
         Button(
-            onClick = { navigator?.navigate(DetalizationScreenDestination) },
+            onClick = {
+                date.value?.let { navigator?.navigate(DetalizationScreenDestination(date = it)) }
+              },
             modifier = Modifier.fillMaxWidth().height(40.dp)
         ) {
             Text("Boo", fontSize = 14.sp)
