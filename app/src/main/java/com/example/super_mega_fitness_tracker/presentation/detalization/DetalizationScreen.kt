@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
@@ -40,7 +42,8 @@ fun DetalizationScreen(viewModel: DetalizationViewModel = koinViewModel()) {
         modifier = Modifier.fillMaxSize().padding(16.dp),
     ) {
         CardsList(
-            exercises.value,
+            modifier = Modifier.weight(1f),
+            exercises = exercises.value,
             onSetChange = { dir, id -> viewModel.onSetChange(dir, id) },
             onRepChange = { dir, id -> viewModel.onRepChange(dir, id) },
             onNameChange = { value, id -> viewModel.onNameChange(value, id) },
@@ -75,14 +78,15 @@ fun DetalizationScreen(viewModel: DetalizationViewModel = koinViewModel()) {
 
 @Composable
 private fun CardsList(
+    modifier: Modifier = Modifier,
     exercises: List<ExerciseReport>,
     onSetChange: (IncrementDirection, Int) -> Unit,
     onRepChange: (IncrementDirection, Int) -> Unit,
     onNameChange: (String, Int) -> Unit,
     onWeightChange: (String, Int) -> Unit,
 ) {
-    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        exercises.forEachIndexed { index, report ->
+    LazyColumn(modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        itemsIndexed(exercises) { index, report ->
             ExerciseCard(
                 exerciseName = report.name,
                 setCount = report.setCount,

@@ -10,3 +10,10 @@ fun ExerciseReport.toDomain(dateEpoch: Long) = ExerciseReportDomainModel(
     weight = weight,
     dateEpoch = dateEpoch,
 )
+
+fun ExerciseReportDomainModel.toPresentation() = ExerciseReport(
+    name = name,
+    setCount = setCount,
+    repCount = repCount,
+    weight = weight,
+)

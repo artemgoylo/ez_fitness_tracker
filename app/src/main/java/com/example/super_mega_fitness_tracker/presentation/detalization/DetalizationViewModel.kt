@@ -5,8 +5,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.super_mega_fitness_tracker.common.IncrementDirection
+import com.example.super_mega_fitness_tracker.domain.use.case.GetExerciseReportsByDateUseCase
 import com.example.super_mega_fitness_tracker.domain.use.case.SaveExerciseReportsUseCase
 import com.example.super_mega_fitness_tracker.presentation.detalization.mapper.toDomain
+import com.example.super_mega_fitness_tracker.presentation.detalization.mapper.toPresentation
 import com.example.super_mega_fitness_tracker.presentation.detalization.model.ExerciseReport
 import com.example.super_mega_fitness_tracker.presentation.navArgs
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,12 +18,25 @@ import kotlinx.coroutines.launch
 
 const val COUNT_LIMIT = 100
 
-class DetalizationViewModel(savedStateHandle: SavedStateHandle, private val useCase: SaveExerciseReportsUseCase): ViewModel() {
+class DetalizationViewModel(
+    savedStateHandle: SavedStateHandle,
+    private val saveUseCase: SaveExerciseReportsUseCase,
+    private val getReportsUseCase: GetExerciseReportsByDateUseCase,
+): ViewModel() {
     private val navArgs: DetalizationScreenNavArgs = savedStateHandle.navArgs()
     val date = navArgs.date
 
     val exercises: StateFlow<List<ExerciseReport>>
         field = MutableStateFlow(emptyList())
+
+    init {
+        viewModelScope.launch {
+            getReportsUseCase(date).fold(
+                onSuccess = { reports -> exercises.update{ reports.map{ it.toPresentation() } } },
+                onFailure = {  },
+            )
+        }
+    }
 
     fun onAddCard() {
         exercises.update{ it + DEFAULT_CARD }
@@ -76,7 +91,7 @@ class DetalizationViewModel(savedStateHandle: SavedStateHandle, private val useC
 
     fun onSave() {
         viewModelScope.launch {
-            useCase(exercises.value.map { it.toDomain(date) })
+            saveUseCase(exercises.value.map { it.toDomain(date) })
         }
     }
 
