@@ -4,8 +4,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
@@ -18,6 +20,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,6 +43,9 @@ fun ExerciseCard(
     Card(modifier = modifier) {
         Column {
             TextField(
+                placeholder = { Text("Enter exercise name") },
+                label = { Text("Exercise Name") },
+                singleLine = true,
                 value = exerciseName,
 //                fontSize = 48.sp,
                 modifier = Modifier.Companion.fillMaxWidth(),
@@ -81,10 +87,10 @@ fun Counter(
     modifier: Modifier = Modifier.Companion,
     onChange: (IncrementDirection, Int) -> Unit
 ) {
-    Column(modifier = modifier, horizontalAlignment = Alignment.Companion.CenterHorizontally) {
-        Text(name, fontSize = 42.sp)
+    Column(modifier = modifier.padding(8.dp), horizontalAlignment = Alignment.Companion.CenterHorizontally) {
+        Text(name, fontSize = 24.sp)
         Row(
-            modifier = Modifier.Companion.width(300.dp),
+            modifier = Modifier.Companion.width(120.dp),
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.Companion.CenterVertically
         ) {
@@ -92,15 +98,15 @@ fun Counter(
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back arrow",
-                    modifier = Modifier.Companion.size(42.dp),
+                    modifier = Modifier.Companion.size(24.dp),
                 )
             }
-            Text(count.toString(), fontSize = 42.sp)
+            Text(count.toString(), fontSize = 24.sp)
             IconButton(onClick = { onChange(IncrementDirection.RIGHT, cardId) }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                     contentDescription = "Forward arrow",
-                    modifier = Modifier.Companion.size(42.dp)
+                    modifier = Modifier.Companion.size(24.dp)
                 )
             }
         }
@@ -113,15 +119,15 @@ fun WeightField(
     cardId: Int,
     onWeightChange: (String, Int) -> Unit,
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text("Weight:")
-        TextField(
-            value = weight,
-            onValueChange = { value: String -> onWeightChange(value, cardId) }
-        )
-    }
+    TextField(
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        placeholder = { Text("0") },
+        label = { Text("Weight") },
+        value = weight,
+        onValueChange = { value: String -> onWeightChange(value, cardId) },
+        modifier = Modifier.Companion.fillMaxWidth(),
+        suffix = { Text(" kg") },
+    )
 }
 
 @Preview
