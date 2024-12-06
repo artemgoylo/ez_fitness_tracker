@@ -4,5 +4,5 @@ data class ExerciseReport(
     val name: String,
     val setCount: Int,
     val repCount: Int,
-    val weight: Int,
+    val weight: String,
 )

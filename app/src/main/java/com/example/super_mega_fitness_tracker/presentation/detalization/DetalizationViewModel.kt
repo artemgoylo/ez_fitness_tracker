@@ -83,7 +83,7 @@ class DetalizationViewModel(
         exercises.update {
             it.mapIndexed { index, report ->
                 if (cardId == index) {
-                    report.copy(weight = value.toIntOrNull() ?: 0)
+                    report.copy(weight = value) //TODO: fix cursor jankiness
                 } else report
             }
         }
@@ -96,6 +96,6 @@ class DetalizationViewModel(
     }
 
     private companion object {
-        val DEFAULT_CARD = ExerciseReport(name = "", setCount = 0, repCount = 0, weight = 0)
+        val DEFAULT_CARD = ExerciseReport(name = "", setCount = 0, repCount = 0, weight = "")
     }
 }
