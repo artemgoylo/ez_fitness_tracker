@@ -11,6 +11,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -39,9 +40,17 @@ fun ExerciseCard(
     onRepChange: (IncrementDirection, Int) -> Unit,
     onNameChange: (String, Int) -> Unit,
     onWeightChange: (String, Int) -> Unit,
+    onDeleteCard: (Int) -> Unit,
 ) {
     Card(modifier = modifier) {
         Column {
+            IconButton(onClick = { onDeleteCard(cardId) }) {
+                Icon(
+                    imageVector = Icons.Outlined.Delete,
+                    contentDescription = "Delete card",
+                    modifier = Modifier.Companion.size(24.dp),
+                )
+            }
             TextField(
                 placeholder = { Text("Enter exercise name") },
                 label = { Text("Exercise Name") },
@@ -145,6 +154,7 @@ fun PreviewExerciseCard() {
             onRepChange = { _, _ -> },
             onNameChange = { _, _ -> },
             onWeightChange = { _, _ -> },
+            onDeleteCard = { _ -> }
         )
     }
 }

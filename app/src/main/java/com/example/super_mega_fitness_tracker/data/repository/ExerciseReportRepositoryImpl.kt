@@ -27,4 +27,10 @@ class ExerciseReportRepositoryImpl(private val dao: ExerciseReportDao): Exercise
             dao.insertAll(*entities.toTypedArray())
         }
     }
+
+    override suspend fun deleteExerciseReportsByDate(date: Long): Result<Unit> = withContext(Dispatchers.IO) {
+        Result.runCatching {
+            dao.deleteAllByDate(date)
+        }
+    }
 }

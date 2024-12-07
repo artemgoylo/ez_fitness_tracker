@@ -42,6 +42,12 @@ class DetalizationViewModel(
         exercises.update{ it + DEFAULT_CARD }
     }
 
+    fun onDeleteCard(cardId: Int) {
+        exercises.update {
+            it.filterIndexed { index, _ -> index != cardId }
+        }
+    }
+
     fun onNameChange(value: String, cardId: Int) {
         exercises.update {
             it.mapIndexed { index, report ->
@@ -91,7 +97,7 @@ class DetalizationViewModel(
 
     fun onSave() {
         viewModelScope.launch {
-            saveUseCase(exercises.value.map { it.toDomain(date) })
+            saveUseCase(date, exercises.value.map { it.toDomain(date) })
         }
     }
 

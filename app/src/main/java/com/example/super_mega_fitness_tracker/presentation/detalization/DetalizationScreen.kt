@@ -48,6 +48,7 @@ fun DetalizationScreen(viewModel: DetalizationViewModel = koinViewModel()) {
             onRepChange = { dir, id -> viewModel.onRepChange(dir, id) },
             onNameChange = { value, id -> viewModel.onNameChange(value, id) },
             onWeightChange = { value, id -> viewModel.onWeightChange(value, id) },
+            onDeleteCard = { id -> viewModel.onDeleteCard(id) }
         )
         Row() {
             Button(
@@ -84,6 +85,7 @@ private fun CardsList(
     onRepChange: (IncrementDirection, Int) -> Unit,
     onNameChange: (String, Int) -> Unit,
     onWeightChange: (String, Int) -> Unit,
+    onDeleteCard: (Int) -> Unit,
 ) {
     LazyColumn(modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         itemsIndexed(exercises) { index, report ->
@@ -98,6 +100,7 @@ private fun CardsList(
                 onRepChange = onRepChange,
                 onNameChange = onNameChange,
                 onWeightChange = onWeightChange,
+                onDeleteCard = onDeleteCard,
             )
         }
     }
