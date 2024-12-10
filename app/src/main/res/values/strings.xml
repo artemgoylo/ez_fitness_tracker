@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">super-mega-fitness-tracker</string>
+    <string name="exercise_name_title">Exercise name</string>
+    <string name="sets_title">Sets</string>
+    <string name="reps_title">Reps</string>
+    <string name="weight_title">Weight</string>
 </resources>

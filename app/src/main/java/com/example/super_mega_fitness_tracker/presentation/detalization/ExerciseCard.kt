@@ -1,6 +1,7 @@
 package com.example.super_mega_fitness_tracker.presentation.detalization
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,7 +36,7 @@ fun ExerciseCard(
     repCount: Int,
     cardId: Int,
     weight: String,
-    modifier: Modifier = Modifier.Companion,
+    modifier: Modifier = Modifier,
     onSetChange: (IncrementDirection, Int) -> Unit,
     onRepChange: (IncrementDirection, Int) -> Unit,
     onNameChange: (String, Int) -> Unit,
@@ -44,12 +45,14 @@ fun ExerciseCard(
 ) {
     Card(modifier = modifier) {
         Column {
-            IconButton(onClick = { onDeleteCard(cardId) }) {
-                Icon(
-                    imageVector = Icons.Outlined.Delete,
-                    contentDescription = "Delete card",
-                    modifier = Modifier.Companion.size(24.dp),
-                )
+            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.TopEnd) {
+                IconButton(onClick = { onDeleteCard(cardId) }) {
+                    Icon(
+                        imageVector = Icons.Outlined.Delete,
+                        contentDescription = "Delete card",
+                        modifier = Modifier.size(24.dp),
+                    )
+                }
             }
             TextField(
                 placeholder = { Text("Enter exercise name") },
@@ -57,7 +60,7 @@ fun ExerciseCard(
                 singleLine = true,
                 value = exerciseName,
 //                fontSize = 48.sp,
-                modifier = Modifier.Companion.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
 //                textAlign = TextAlign.Center,
                 onValueChange = { value: String -> onNameChange(value, cardId) }
             )
@@ -73,14 +76,14 @@ fun ExerciseCard(
                     "Sets",
                     setCount,
                     cardId,
-                    modifier = Modifier.Companion.weight(1f),
+                    modifier = Modifier.weight(1f),
                     onChange = onSetChange
                 )
                 Counter(
                     "Reps",
                     repCount,
                     cardId,
-                    modifier = Modifier.Companion.weight(1f),
+                    modifier = Modifier.weight(1f),
                     onChange = onRepChange
                 )
             }
@@ -93,21 +96,21 @@ fun Counter(
     name: String,
     count: Int,
     cardId: Int,
-    modifier: Modifier = Modifier.Companion,
+    modifier: Modifier = Modifier,
     onChange: (IncrementDirection, Int) -> Unit
 ) {
-    Column(modifier = modifier.padding(8.dp), horizontalAlignment = Alignment.Companion.CenterHorizontally) {
+    Column(modifier = modifier.padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(name, fontSize = 24.sp)
         Row(
-            modifier = Modifier.Companion.width(120.dp),
+            modifier = Modifier.width(120.dp),
             horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.Companion.CenterVertically
+            verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = { onChange(IncrementDirection.LEFT, cardId) }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back arrow",
-                    modifier = Modifier.Companion.size(24.dp),
+                    modifier = Modifier.size(24.dp),
                 )
             }
             Text(count.toString(), fontSize = 24.sp)
@@ -115,7 +118,7 @@ fun Counter(
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                     contentDescription = "Forward arrow",
-                    modifier = Modifier.Companion.size(24.dp)
+                    modifier = Modifier.size(24.dp)
                 )
             }
         }
@@ -134,7 +137,7 @@ fun WeightField(
         label = { Text("Weight") },
         value = weight,
         onValueChange = { value: String -> onWeightChange(value, cardId) },
-        modifier = Modifier.Companion.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         suffix = { Text(" kg") },
     )
 }

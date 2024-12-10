@@ -1,7 +1,6 @@
 package com.example.super_mega_fitness_tracker.data.persistence
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
 
